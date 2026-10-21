@@ -5,12 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plataforma de Mercados Financieros - Universidad de Boyacá</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulse-once {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); filter: brightness(1.2); }
+            100% { transform: scale(1); }
+        .animar-impacto {
+            animation: pulse-once 0.4s ease-in-out;
+        }
+    </style>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans min-h-screen p-4 md:p-8">
 
     <div class="max-w-6xl mx-auto">
-        <!-- Encabezado Principal Institucional con tu Logotipo PNG ajustado -->
-        <header class="bg-slate-800 border border-slate-700 rounded-2xl p-6 mb-6 shadow-xl flex flex-col md:flex-row justify-between items-center gap-4">
+        <!-- Encabezado Principal Institucional con tu Logotipo PNG -->
+        <header class="bg-slate-800 border border-slate-700 rounded-2xl p-6 mb-4 shadow-xl flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-4">
                 <div class="bg-slate-900/60 border border-slate-700 p-3 rounded-2xl flex items-center justify-center shadow min-w-[150px] h-[150px]">
                     <img src="Logo-UdB-Vertical-Blanco.png" alt="Logo Universidad de Boyacá" style="height: 130px;" class="w-auto object-contain">
@@ -28,6 +37,21 @@
                 </div>
             </div>
         </header>
+
+        <!-- OPCIÓN 1: Ticker Bursátil en Vivo (Estilo Wall Street) -->
+        <div class="bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-3 mb-6 shadow-lg flex items-center gap-4 overflow-hidden">
+            <span class="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-lg border border-cyan-500/30 text-xs font-mono font-bold shrink-0 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> MESA EN VIVO
+            </span>
+            <div class="flex gap-8 overflow-x-auto whitespace-nowrap text-xs font-mono text-slate-300 scrollbar-none">
+                <span class="flex items-center gap-2">🛢️ WTI Crude: <strong class="text-emerald-400">$78.40 (+1.2%)</strong></span>
+                <span class="flex items-center gap-2">⛏️ Oro Spot: <strong class="text-emerald-400">$2,385.20 (+0.8%)</strong></span>
+                <span class="flex items-center gap-2">💱 USD/COP: <strong class="text-rose-400">$4,120.50 (-0.3%)</strong></span>
+                <span class="flex items-center gap-2">⚡ S&P 500: <strong class="text-emerald-400">5,240.10 (+0.5%)</strong></span>
+                <span class="flex items-center gap-2">🪙 Cripto Index: <strong class="text-rose-400">$64,100 (-2.1%)</strong></span>
+                <span class="flex items-center gap-2">🏛️ Tasa BanRep: <strong class="text-cyan-400">9.25%</strong></span>
+            </div>
+        </div>
 
         <!-- Barra de Navegación -->
         <nav id="nav-superior" class="bg-slate-800/90 border border-slate-700 rounded-xl p-3 mb-6 shadow-lg flex flex-wrap gap-3 items-center justify-between hidden">
@@ -76,7 +100,7 @@
                         <div class="text-xs text-slate-400 uppercase font-bold mb-1">Ronda de Juego</div>
                         <div id="stat-ronda" class="text-xl font-mono font-bold text-cyan-400">1 / 6</div>
                     </div>
-                    <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow">
+                    <div id="contenedor-cofre" class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow transition-all duration-300">
                         <div class="text-xs text-slate-400 uppercase font-bold mb-1">Cofre de Monedas</div>
                         <div id="stat-capital" class="text-xl font-mono font-bold text-emerald-400">1.000 Monedas</div>
                     </div>
@@ -116,7 +140,7 @@
                         <span id="evento-num" class="text-xs text-slate-400 font-mono">Evento 1 de 6</span>
                     </div>
                     <h3 id="noticia-titulo" class="text-xl font-bold text-white mb-2">Quiebra bancaria internacional y escalada de tensiones bélicas</h3>
-                    <p id="noticia-cuerpo" class="text-slate-300 text-sm mb-4 leading-relaxed">La caída de dos grandes bancos multinacionales genera pánico en los mercados globales. Millones de ahorradores e inversionistas institucionales abandonan activos riesgosos para refugiarse en el oro físico.</p>
+                    <p id="noticia-cuerpo" class="text-slate-300 text-sm mb-4 leading-relaxed">La caída de two grandes bancos multinacionales genera pánico en los mercados globales. Millones de ahorradores e inversionistas institucionales abandonan activos riesgosos para refugiarse en el oro físico.</p>
                     
                     <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-cyan-300 font-medium">
                         💬 Pregunta para el equipo (<span id="txt-nombre-equipo" class="text-white font-bold">Nicolas</span>): De acuerdo con esta noticia, ¿qué acción debes tomar inmediatamente con tu inversión en <span id="txt-nombre-activo" class="text-amber-400 font-bold">Minera Dragón de Oro</span>?
@@ -211,4 +235,300 @@
         </main>
     </div>
 
-    <!-- SCRIPT DE LA PLATAFORMA
+    <!-- SCRIPT DE LA PLATAFORMA -->
+    <script>
+        const listaRetos = [
+            {
+                ronda: 1,
+                activo: "Minera Dragón de Oro",
+                categoria: "Materias Primas / Refugio de Valor",
+                icono: "⛏️",
+                desc: "Compañía minera extractora de lingotes de oro y metales preciosos.",
+                titulo: "Quiebra bancaria internacional y escalada de tensiones bélicas",
+                cuerpo: "La caída de dos grandes bancos multinacionales genera pánico en los mercados globales. Millones de ahorradores e inversionistas institucionales abandonan activos riesgosos para refugiarse en el oro físico.",
+                correcta: "COMPRAR",
+                impactoPct: 35,
+                explicacion: "En momentos de incertidumbre geopolítica o crisis bancaria, el oro opera como el principal 'activo refugio', recibiendo capitales masivos que elevan rápidamente su precio.",
+                concepto: "Activo Refugio en Crisis"
+            },
+            {
+                ronda: 2,
+                activo: "AeroBoyacá Airlines",
+                categoria: "Transporte Aéreo y Turismo",
+                icono: "✈️",
+                desc: "Aerolínea de transporte comercial de pasajeros y carga regional e internacional.",
+                titulo: "Crisis del petróleo dispara costo del combustible de aviación en 90%",
+                cuerpo: "Restricciones de refinerías internacionales disparan el precio del queroseno jet a niveles récord. El combustible representa casi el 40% del costo total de vuelo.",
+                correcta: "VENDER",
+                impactoPct: 25,
+                explicacion: "Un aumento repentino en el costo de los insumos principales deteriora rápidamente las finanzas de las aerolíneas al no poder trasladar todo el costo inmediatamente a los boletos.",
+                concepto: "Estructura de Costos Operativos"
+            },
+            {
+                ronda: 3,
+                activo: "AgroTech Colombia",
+                categoria: "Agroindustria y Alimentación",
+                icono: "🌽",
+                desc: "Empresa exportadora de alimentos orgánicos, tecnología de riego y granos de alta calidad.",
+                titulo: "Tratado de libre comercio abre exportaciones con arancel cero a Asia y Europa",
+                cuerpo: "Se ratifica un acuerdo multilateral que permite a la agroindustria colocar productos agrícolas sin aranceles en mercados de alta demanda, incrementando contratos en un 50%.",
+                correcta: "COMPRAR",
+                impactoPct: 30,
+                explicacion: "Eliminar aranceles abarata el producto en destino, expande el mercado potencial y genera economías de escala que aumentan el beneficio neto de la empresa exportadora.",
+                concepto: "Apertura Comercial y Rentabilidad"
+            },
+            {
+                ronda: 4,
+                activo: "Cripto Lumina",
+                categoria: "Activos Digitales y Web3",
+                icono: "🪙",
+                desc: "Plataforma de intercambio y tesorería descentralizada de criptoactivos globales.",
+                titulo: "Bancos centrales globales anuncian prohibición total de pasarelas cripto",
+                cuerpo: "Los principales reguladores financieros del G20 emiten una normativa estricta declarando ilegales las pasarelas de conversión directa entre moneda fiduciaria y activos digitales.",
+                correcta: "VENDER",
+                impactoPct: 40,
+                explicacion: "Las restricciones regulatorias severas cortan la liquidez del ecosistema, provocando salidas masivas de capital institucional y caídas drásticas de valor.",
+                concepto: "Riesgo Regulatorio y Liquidez"
+            },
+            {
+                ronda: 5,
+                activo: "Pharma Vitalis",
+                categoria: "Biotecnología y Salud",
+                icono: "💊",
+                desc: "Laboratorio farmacéutico especializado en tratamientos oncológicos e inmunología.",
+                titulo: "FDA aprueba vía rápida tratamiento innovador contra enfermedades crónicas",
+                cuerpo: "Las autoridades sanitarias otorgan autorización comercial prioritaria al nuevo compuesto biológico desarrollado por el laboratorio, asegurando contratos con sistemas de salud públicos.",
+                correcta: "COMPRAR",
+                impactoPct: 35,
+                explicacion: "La aprobación regulatoria de un fármaco innovador genera flujos de caja seguros a largo plazo protegidos por patentes exclusivas.",
+                concepto: "Innovación y Patentes Exclusivas"
+            },
+            {
+                ronda: 6,
+                activo: "TecnoDrive Autómatas",
+                categoria: "Inteligencia Artificial y Robótica",
+                icono: "⚡",
+                desc: "Empresa de desarrollo de sistemas de conducción autónoma y software logístico.",
+                titulo: "Falla masiva de software autónomo provoca accidentes y demandas millonarias",
+                cuerpo: "Una actualización defectuosa en los algoritmos de navegación de la flota autónoma ocasiona colisiones simultáneas en tres países, paralizando las operaciones comerciales.",
+                correcta: "VENDER",
+                impactoPct: 30,
+                explicacion: "Los fallos tecnológicos críticos generan pasivos contingentes por demandas, daño reputacional severo y suspensión temporal de operaciones.",
+                concepto: "Gestión de Riesgo Tecnológico"
+            }
+        ];
+
+        let nombreEquipo = "";
+        let capital = 1000;
+        let rondaActual = 1;
+        let aciertos = 0;
+        let racha = 0;
+        let retoActual = null;
+
+        function iniciarJuegoDirecto() {
+            let inputVal = document.getElementById('id-estudiante').value.trim();
+            if(!inputVal) {
+                alert("Por favor ingresa el nombre de tu equipo o estudiante.");
+                return;
+            }
+            nombreEquipo = inputVal;
+            document.getElementById('txt-nombre-equipo').innerText = nombreEquipo;
+
+            document.getElementById('pantalla-inicio').classList.add('hidden');
+            document.getElementById('pantalla-juego').classList.remove('hidden');
+            document.getElementById('pantalla-podio').classList.add('hidden');
+            document.getElementById('nav-superior').classList.remove('hidden');
+
+            rondaActual = 1;
+            capital = 1000;
+            aciertos = 0;
+            racha = 0;
+
+            cargarRonda();
+        }
+
+        function cargarRonda() {
+            retoActual = listaRetos[rondaActual - 1];
+
+            document.getElementById('badge-estado').innerText = `Desafío: Ronda ${rondaActual} / 6`;
+            document.getElementById('stat-ronda').innerText = `${rondaActual} / 6`;
+            document.getElementById('stat-capital').innerText = `${capital.toLocaleString('es-CO')} Monedas`;
+            
+            let rentabilidad = ((capital - 1000) / 1000) * 100;
+            let elRent = document.getElementById('stat-rentabilidad');
+            elRent.innerText = `${rentabilidad >= 0 ? '+' : ''}${rentabilidad.toFixed(1)}%`;
+            elRent.className = `text-xl font-mono font-bold ${rentabilidad >= 0 ? 'text-cyan-400' : 'text-rose-400'}`;
+
+            document.getElementById('stat-aciertos').innerText = `${aciertos} / ${rondaActual - 1} | ${racha} 🔥`;
+
+            // Activo
+            document.getElementById('activo-categoria').innerText = retoActual.categoria;
+            document.getElementById('activo-nombre').innerHTML = `<span>${retoActual.icono}</span> ${retoActual.activo}`;
+            document.getElementById('activo-desc').innerText = retoActual.desc;
+            document.getElementById('activo-capital').innerText = `${capital.toLocaleString('es-CO')} Monedas`;
+            document.getElementById('txt-nombre-activo').innerText = retoActual.activo;
+
+            // Noticia
+            document.getElementById('evento-num').innerText = `Evento ${rondaActual} de 6`;
+            document.getElementById('noticia-titulo').innerText = retoActual.titulo;
+            document.getElementById('noticia-cuerpo').innerText = retoActual.cuerpo;
+
+            document.getElementById('panel-botones').classList.remove('hidden');
+            document.getElementById('panel-feedback').classList.add('hidden');
+        }
+
+        function tomarDecision(decision) {
+            let acerto = (decision === retoActual.correcta);
+            let variacion = capital * (retoActual.impactoPct / 100);
+
+            let tituloFeedback = document.getElementById('feedback-titulo');
+            let montoFeedback = document.getElementById('feedback-monto');
+            let panelFeedback = document.getElementById('panel-feedback');
+            let cajaCofre = document.getElementById('contenedor-cofre');
+
+            // OPCIÓN 2: Efectos visuales de impacto dinámicos en el cofre
+            cajaCofre.classList.add('animar-impacto');
+            setTimeout(() => cajaCofre.classList.remove('animar-impacto'), 400);
+
+            if(acerto) {
+                aciertos++;
+                racha++;
+                capital += variacion;
+                tituloFeedback.innerHTML = `🎉 ¡ACCIÓN CORRECTA!`;
+                tituloFeedback.className = "text-xl font-bold text-emerald-400 flex items-center gap-2";
+                cajaCofre.className = "bg-emerald-950/60 border border-emerald-500 rounded-xl p-4 text-center shadow transition-all duration-300";
+                
+                if(decision === "COMPRAR") {
+                    montoFeedback.innerText = `+${variacion.toFixed(0)} Monedas (+${retoActual.impactoPct}% por comprar a tiempo)`;
+                } else {
+                    montoFeedback.innerText = `+${variacion.toFixed(0)} Monedas (Capital salvado y ganancia de liquidez +${retoActual.impactoPct}%)`;
+                }
+                montoFeedback.className = "bg-slate-900 border border-emerald-500/40 px-4 py-2 rounded-xl text-xs font-mono font-bold text-emerald-400";
+                panelFeedback.className = "bg-slate-800 border border-emerald-500/50 rounded-2xl p-6 shadow-xl mb-6";
+            } else {
+                racha = 0;
+                capital = Math.max(10, capital - variacion);
+                tituloFeedback.innerHTML = `⚠️ ¡ACCIÓN INCORRECTA!`;
+                tituloFeedback.className = "text-xl font-bold text-rose-400 flex items-center gap-2";
+                cajaCofre.className = "bg-rose-950/60 border border-rose-500 rounded-xl p-4 text-center shadow transition-all duration-300";
+                
+                if(decision === "COMPRAR") {
+                    montoFeedback.innerText = `-${variacion.toFixed(0)} Monedas (Pérdida por exposición al riesgo de caída)`;
+                } else {
+                    montoFeedback.innerText = `-${variacion.toFixed(0)} Monedas (Costo de oportunidad por salir antes de la subida)`;
+                }
+                montoFeedback.className = "bg-slate-900 border border-rose-500/40 px-4 py-2 rounded-xl text-xs font-mono font-bold text-rose-400";
+                panelFeedback.className = "bg-slate-800 border border-rose-500/50 rounded-2xl p-6 shadow-xl mb-6";
+            }
+
+            document.getElementById('feedback-explicacion').innerText = retoActual.explicacion;
+            document.getElementById('feedback-concepto').innerText = retoActual.concepto;
+
+            if(rondaActual >= 6) {
+                document.getElementById('btn-siguiente-ronda').innerText = "Ver Resultado Final 🏆";
+            } else {
+                document.getElementById('btn-siguiente-ronda').innerText = "Siguiente Ronda ➔";
+            }
+
+            document.getElementById('panel-botones').classList.add('hidden');
+            panelFeedback.classList.remove('hidden');
+
+            document.getElementById('stat-capital').innerText = `${capital.toLocaleString('es-CO')} Monedas`;
+            document.getElementById('stat-aciertos').innerText = `${aciertos} / ${rondaActual} | ${racha} 🔥`;
+
+            guardarRanking();
+        }
+
+        function siguienteRonda() {
+            // Restaurar color del contenedor de cofre
+            document.getElementById('contenedor-cofre').className = "bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow transition-all duration-300";
+            if(rondaActual < 6) {
+                rondaActual++;
+                cargarRonda();
+            } else {
+                mostrarPantallaPodio();
+            }
+        }
+
+        function mostrarPantallaPodio() {
+            document.getElementById('pantalla-juego').classList.add('hidden');
+            document.getElementById('pantalla-podio').classList.remove('hidden');
+
+            let rentabilidad = ((capital - 1000) / 1000) * 100;
+
+            document.getElementById('podio-nombre').innerText = nombreEquipo;
+            document.getElementById('podio-monedas').innerText = `${capital.toLocaleString('es-CO')} Monedas`;
+            
+            let elRent = document.getElementById('podio-rentabilidad');
+            elRent.innerText = `${rentabilidad >= 0 ? '+' : ''}${rentabilidad.toFixed(1)}% de Rentabilidad Global`;
+            elRent.className = `text-sm font-mono font-bold ${rentabilidad >= 0 ? 'text-cyan-400' : 'text-rose-400'} mb-4`;
+
+            document.getElementById('podio-aciertos').innerText = `${aciertos} de 6 Aciertos Totales`;
+        }
+
+        function reiniciarJuegoTotal() {
+            nombreEquipo = "";
+            capital = 1000;
+            rondaActual = 1;
+            aciertos = 0;
+            racha = 0;
+            let inputField = document.getElementById('id-estudiante');
+            if(inputField) inputField.value = "";
+
+            document.getElementById('contenedor-cofre').className = "bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow transition-all duration-300";
+            document.getElementById('pantalla-podio').classList.add('hidden');
+            document.getElementById('seccion-ranking').classList.add('hidden');
+            document.getElementById('nav-superior').classList.add('hidden');
+            document.getElementById('pantalla-inicio').classList.remove('hidden');
+        }
+
+        function cambiarVista(vista) {
+            document.getElementById('pantalla-inicio').classList.add('hidden');
+            document.getElementById('pantalla-juego').classList.add('hidden');
+            document.getElementById('pantalla-podio').classList.add('hidden');
+            document.getElementById('seccion-ranking').classList.add('hidden');
+
+            if(vista === 'juego') {
+                if(!nombreEquipo) document.getElementById('pantalla-inicio').classList.remove('hidden');
+                else document.getElementById('pantalla-juego').classList.remove('hidden');
+            } else if(vista === 'ranking') {
+                document.getElementById('seccion-ranking').classList.remove('hidden');
+                actualizarTablaRanking();
+            }
+        }
+
+        function guardarRanking() {
+            let ranking = JSON.parse(localStorage.getItem('ranking_bolsa_uniboyaca') || '[]');
+            let idx = ranking.findIndex(r => r.nombre === nombreEquipo);
+            let rent = ((capital - 1000) / 1000) * 100;
+            let obj = { nombre: nombreEquipo, capital: capital, rentabilidad: rent, aciertos: aciertos };
+            if(idx >= 0) ranking[idx] = obj; else ranking.push(obj);
+            localStorage.setItem('ranking_bolsa_uniboyaca', JSON.stringify(ranking));
+        }
+
+        function actualizarTablaRanking() {
+            let tbody = document.getElementById('tabla-ranking-body');
+            tbody.innerHTML = '';
+            let ranking = JSON.parse(localStorage.getItem('ranking_bolsa_uniboyaca') || '[]');
+            ranking.sort((a, b) => b.capital - a.capital);
+
+            if(ranking.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">Aún no hay equipos registrados en este dispositivo.</td></tr>`;
+                return;
+            }
+
+            ranking.forEach((item, idx) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-3 text-amber-400 font-bold">#${idx+1}</td>
+                    <td class="p-3 text-white font-semibold">${item.nombre}</td>
+                    <td class="p-3 text-emerald-400 font-bold">${item.capital.toFixed(0)} Monedas</td>
+                    <td class="p-3 font-bold ${item.rentabilidad >= 0 ? 'text-cyan-400' : 'text-rose-400'}">${item.rentabilidad >= 0 ? '+' : ''}${item.rentabilidad.toFixed(1)}%</td>
+                    <td class="p-3 text-amber-300 font-bold">${item.aciertos} / 6 Aciertos</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>
