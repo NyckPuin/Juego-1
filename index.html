@@ -14,6 +14,13 @@
         .animar-impacto {
             animation: pulse-once 0.4s ease-in-out;
         }
+        @keyframes parpadeo {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .vela-en-vivo {
+            animation: parpadeo 1.2s infinite;
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans min-h-screen p-4 md:p-8">
@@ -39,7 +46,7 @@
             </div>
         </header>
 
-        <!-- Ticker Bursátil Compacto y Ajustado sin scroll -->
+        <!-- Ticker Bursátil Compacto -->
         <div class="bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-2.5 mb-6 shadow-lg flex flex-wrap justify-between items-center text-xs font-mono">
             <span class="text-cyan-400 font-bold flex items-center gap-1">
                 <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> MESA EN VIVO:
@@ -70,13 +77,13 @@
                 <div class="text-4xl mb-3">⚡</div>
                 <h2 class="text-2xl font-bold text-emerald-400 mb-2">Desafío Táctico: ¿Comprar o Vender?</h2>
                 <p class="text-slate-300 text-sm mb-6 leading-relaxed">
-                    En este juego pondrás a prueba tu instinto financiero. En cada ronda <strong>te diremos en qué activo está invertido tu cofre</strong> de 1,000 monedas de oro. Analiza el gráfico técnico y la noticia de última hora para decidir si <strong>COMPRAR</strong> (apostar al alza) o <strong>VENDER</strong> (proteger capital).
+                    En este juego pondrás a prueba tu instinto financiero. Analiza el gráfico de velas en vivo y la noticia de última hora para decidir al instante si debes <strong>COMPRAR</strong> (apostar al alza) o <strong>VENDER</strong> (proteger capital).
                 </p>
                 
                 <div class="bg-slate-900 border border-slate-700 rounded-xl p-4 mb-6 text-left text-xs space-y-2">
                     <div class="text-emerald-400 font-semibold">✓ Regla 1: Dinero invertido en un activo base por ronda.</div>
-                    <div class="text-cyan-400 font-semibold">✓ Regla 2: Analiza las velas japonesas y el entorno macroeconómico.</div>
-                    <div class="text-amber-400 font-semibold">✓ Regla 3: Obtén retroalimentación didáctica inmediata.</div>
+                    <div class="text-cyan-400 font-semibold">✓ Regla 2: Observa el comportamiento institucional de las velas en tiempo real.</div>
+                    <div class="text-amber-400 font-semibold">✓ Regla 3: Recibe retroalimentación didáctica inmediata.</div>
                 </div>
 
                 <div class="mb-4 text-left">
@@ -112,7 +119,7 @@
                     </div>
                 </div>
 
-                <!-- Tarjeta del Activo Asignado y Gráfico de Velas -->
+                <!-- Tarjeta del Activo y Gráfico Técnico en Tiempo Real -->
                 <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 mb-6 shadow-xl grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
                     <div class="lg:col-span-1">
                         <div class="flex items-center gap-2 mb-1">
@@ -129,17 +136,23 @@
                         </div>
                     </div>
                     
-                    <!-- Gráfico de Velas Japonesas Técnico -->
-                    <div class="lg:col-span-2 bg-slate-900 border border-slate-700 rounded-xl p-4">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-xs font-mono text-cyan-400 font-bold">📊 Gráfico Técnico (Velas Japonesas H4)</span>
-                            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono">Tendencia del Activo</span>
+                    <!-- Pantalla de Gráfico Bursátil de Velas en Vivo (Automático) -->
+                    <div class="lg:col-span-2 bg-slate-950 border border-slate-800 rounded-2xl p-4 relative shadow-inner">
+                        <div class="flex justify-between items-center mb-3 border-b border-slate-800 pb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span class="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">Terminal de Velas (Live Feed)</span>
+                            </div>
+                            <span id="precio-ticker-activo" class="text-xs font-mono text-cyan-400 font-bold">$2,385.20 USD</span>
                         </div>
-                        <div id="contenedor-velas" class="flex justify-around items-end h-32 pt-4 px-2 border-b border-slate-800">
-                            <!-- Las velas se cargan dinámicamente -->
+                        
+                        <!-- Contenedor dinámico de velas animadas en tiempo real -->
+                        <div id="contenedor-velas" class="flex justify-around items-end h-36 pt-4 px-2">
+                            <!-- Velas renderizadas por JS -->
                         </div>
-                        <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
-                            <span>T-4</span><span>T-3</span><span>T-2</span><span>T-1</span><span class="text-cyan-400 font-bold">AHORA</span>
+                        
+                        <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-2 pt-1 border-t border-slate-900">
+                            <span>09:00</span><span>10:00</span><span>11:00</span><span>12:00</span><span class="text-cyan-400 font-bold animate-pulse">🔴 EN VIVO (H4)</span>
                         </div>
                     </div>
                 </div>
@@ -154,7 +167,7 @@
                     <p id="noticia-cuerpo" class="text-slate-300 text-sm mb-4 leading-relaxed">La caída de dos grandes bancos multinacionales genera pánico en los mercados globales. Millones de ahorradores e inversionistas institucionales abandonan activos riesgosos para refugiarse en el oro físico.</p>
                     
                     <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-cyan-300 font-medium">
-                        💬 Pregunta para el equipo (<span id="txt-nombre-equipo" class="text-white font-bold">Nicolas</span>): Con base en la noticia y el gráfico de velas, ¿qué acción tomas con <span id="txt-nombre-activo" class="text-amber-400 font-bold">Minera Dragón de Oro</span>?
+                        💬 Pregunta para el equipo (<span id="txt-nombre-equipo" class="text-white font-bold">Nicolas</span>): Con base en la noticia y el movimiento del gráfico, ¿qué acción tomas con <span id="txt-nombre-activo" class="text-amber-400 font-bold">Minera Dragón de Oro</span>?
                     </div>
                 </div>
 
@@ -261,7 +274,7 @@
                 impactoPct: 35,
                 explicacion: "En momentos de incertidumbre geopolítica o crisis bancaria, el oro opera como el principal 'activo refugio', recibiendo capitales masivos que elevan rápidamente su precio.",
                 concepto: "Activo Refugio en Crisis",
-                velas: ['verde', 'verde', 'rojo', 'verde', 'verde'] // Tendencia alcista
+                tendencia: 'alcista'
             },
             {
                 ronda: 2,
@@ -275,7 +288,7 @@
                 impactoPct: 25,
                 explicacion: "Un aumento repentino en el costo de los insumos principales deteriora rápidamente las finanzas de las aerolíneas al no poder trasladar todo el costo inmediatamente a los boletos.",
                 concepto: "Estructura de Costos Operativos",
-                velas: ['verde', 'rojo', 'rojo', 'rojo', 'rojo'] // Tendencia bajista
+                tendencia: 'bajista'
             },
             {
                 ronda: 3,
@@ -289,7 +302,7 @@
                 impactoPct: 30,
                 explicacion: "Eliminar aranceles abarata el producto en destino, expande el mercado potencial y genera economías de escala que aumentan el beneficio neto de la empresa exportadora.",
                 concepto: "Apertura Comercial y Rentabilidad",
-                velas: ['rojo', 'verde', 'verde', 'verde', 'verde'] // Tendencia alcista
+                tendencia: 'alcista'
             },
             {
                 ronda: 4,
@@ -303,7 +316,7 @@
                 impactoPct: 40,
                 explicacion: "Las restricciones regulatorias severas cortan la liquidez del ecosistema, provocando salidas masivas de capital institucional y caídas drásticas de valor.",
                 concepto: "Riesgo Regulatorio y Liquidez",
-                velas: ['verde', 'verde', 'rojo', 'rojo', 'rojo'] // Tendencia bajista fuerte
+                tendencia: 'bajista'
             },
             {
                 ronda: 5,
@@ -317,7 +330,7 @@
                 impactoPct: 35,
                 explicacion: "La aprobación regulatoria de un fármaco innovador genera flujos de caja seguros a largo plazo protegidos por patentes exclusivas.",
                 concepto: "Innovación y Patentes Exclusivas",
-                velas: ['rojo', 'verde', 'rojo', 'verde', 'verde'] // Tendencia alcista
+                tendencia: 'alcista'
             },
             {
                 ronda: 6,
@@ -331,7 +344,7 @@
                 impactoPct: 30,
                 explicacion: "Los fallos tecnológicos críticos generan pasivos contingentes por demandas, daño reputacional severo y suspensión temporal de operaciones.",
                 concepto: "Gestión de Riesgo Tecnológico",
-                velas: ['verde', 'rojo', 'verde', 'rojo', 'rojo'] // Tendencia bajista
+                tendencia: 'bajista'
             }
         ];
 
@@ -341,6 +354,7 @@
         let aciertos = 0;
         let racha = 0;
         let retoActual = null;
+        let intervaloVelas = null;
 
         function iniciarJuego() {
             let inputVal = document.getElementById('input-nombre').value.trim();
@@ -385,8 +399,9 @@
             document.getElementById('activo-capital').innerText = `${capital.toLocaleString('es-CO')} Monedas`;
             document.getElementById('txt-nombre-activo').innerText = retoActual.activo;
 
-            // Generar Gráfico de Velas Japonesas
-            renderizarVelas(retoActual.velas);
+            // Iniciar animación automática del gráfico de velas en tiempo real
+            if(intervaloVelas) clearInterval(intervaloVelas);
+            iniciarSimulacionVelasLive();
 
             // Noticia
             document.getElementById('evento-num').innerText = `Evento ${rondaActual} de 6`;
@@ -397,31 +412,48 @@
             document.getElementById('panel-feedback').classList.add('hidden');
         }
 
-        function renderizarVelas(patron) {
+        function iniciarSimulacionVelasLive() {
             let contenedor = document.getElementById('contenedor-velas');
-            contenedor.innerHTML = '';
+            let spanPrecio = document.getElementById('precio-ticker-activo');
             
-            patron.forEach((tipo, index) => {
-                let esVerde = (tipo === 'verde');
-                let colorClase = esVerde ? 'bg-emerald-500 border-emerald-400' : 'bg-rose-500 border-rose-400';
-                let mechaColor = esVerde ? 'bg-emerald-400' : 'bg-rose-400';
-                let alturaCuerpo = Math.floor(Math.random() * 30) + 35; // Altura variable simulada
+            let precioBase = 1000 + (rondaActual * 250);
 
-                let velaHTML = `
-                    <div class="flex flex-col items-center justify-center h-full w-10">
-                        <!-- Mecha superior -->
-                        <div class="w-0.5 h-6 ${mechaColor}"></div>
-                        <!-- Cuerpo de la vela -->
-                        <div class="w-6 rounded-sm border ${colorClase}" style="height: ${alturaCuerpo}px;"></div>
-                        <!-- Mecha inferior -->
-                        <div class="w-0.5 h-6 ${mechaColor}"></div>
-                    </div>
-                `;
-                contenedor.innerHTML += velaHTML;
-            });
+            function actualizarGrafico() {
+                contenedor.innerHTML = '';
+                let totalVelas = 7;
+                let precioActual = precioBase + (Math.random() * 40 - 20);
+                spanPrecio.innerText = `$${precioActual.toFixed(2)} USD`;
+
+                for (let i = 0; i < totalVelas; i++) {
+                    let esUltima = (i === totalVelas - 1);
+                    let aleatorio = Math.random();
+                    let esVerde = (retoActual.tendencia === 'alcista') ? (aleatorio > 0.3) : (aleatorio < 0.3);
+                    if(esUltima) esVerde = (retoActual.tendencia === 'alcista');
+
+                    let colorClase = esVerde ? 'bg-emerald-500 border-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.4)]' : 'bg-rose-500 border-rose-400 shadow-[0_0_10px_rgba(244,63,94,0.4)]';
+                    let mechaColor = esVerde ? 'bg-emerald-400' : 'bg-rose-400';
+                    let alturaCuerpo = Math.floor(Math.random() * 35) + 30;
+
+                    let claseExtra = esUltima ? 'vela-en-vivo ring-2 ring-cyan-400/50 rounded' : '';
+
+                    let velaHTML = `
+                        <div class="flex flex-col items-center justify-center h-full w-10 ${claseExtra}">
+                            <div class="w-0.5 h-5 ${mechaColor}"></div>
+                            <div class="w-5 rounded-sm border ${colorClase}" style="height: ${alturaCuerpo}px;"></div>
+                            <div class="w-0.5 h-5 ${mechaColor}"></div>
+                        </div>
+                    `;
+                    contenedor.innerHTML += velaHTML;
+                }
+            }
+
+            actualizarGrafico();
+            intervaloVelas = setInterval(actualizarGrafico, 1200);
         }
 
         function tomarDecision(decision) {
+            if(intervaloVelas) clearInterval(intervaloVelas);
+
             let acerto = (decision === retoActual.correcta);
             let variacion = capital * (retoActual.impactoPct / 100);
 
@@ -493,6 +525,7 @@
         }
 
         function mostrarPantallaPodio() {
+            if(intervaloVelas) clearInterval(intervaloVelas);
             document.getElementById('pantalla-juego').classList.add('hidden');
             document.getElementById('pantalla-podio').classList.remove('hidden');
 
@@ -509,6 +542,7 @@
         }
 
         function reiniciarJuegoTotal() {
+            if(intervaloVelas) clearInterval(intervaloVelas);
             nombreEquipo = "";
             capital = 1000;
             rondaActual = 1;
