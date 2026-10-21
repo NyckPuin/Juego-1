@@ -39,19 +39,16 @@
             </div>
         </header>
 
-        <!-- Ticker Bursátil en Vivo -->
-        <div class="bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-3 mb-6 shadow-lg flex items-center gap-4 overflow-hidden">
-            <span class="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-lg border border-cyan-500/30 text-xs font-mono font-bold shrink-0 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> MESA EN VIVO
+        <!-- Ticker Bursátil Compacto y Ajustado sin scroll -->
+        <div class="bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-2.5 mb-6 shadow-lg flex flex-wrap justify-between items-center text-xs font-mono">
+            <span class="text-cyan-400 font-bold flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> MESA EN VIVO:
             </span>
-            <div class="flex gap-8 overflow-x-auto whitespace-nowrap text-xs font-mono text-slate-300">
-                <span class="flex items-center gap-2">🛢️ WTI Crude: <strong class="text-emerald-400">$78.40 (+1.2%)</strong></span>
-                <span class="flex items-center gap-2">⛏️ Oro Spot: <strong class="text-emerald-400">$2,385.20 (+0.8%)</strong></span>
-                <span class="flex items-center gap-2">💱 USD/COP: <strong class="text-rose-400">$4,120.50 (-0.3%)</strong></span>
-                <span class="flex items-center gap-2">⚡ S&P 500: <strong class="text-emerald-400">5,240.10 (+0.5%)</strong></span>
-                <span class="flex items-center gap-2">🪙 Cripto Index: <strong class="text-rose-400">$64,100 (-2.1%)</strong></span>
-                <span class="flex items-center gap-2">🏛️ Tasa BanRep: <strong class="text-cyan-400">9.25%</strong></span>
-            </div>
+            <span class="text-slate-300">Oro: <strong class="text-emerald-400">$2,385 (+0.8%)</strong></span>
+            <span class="text-slate-300">WTI: <strong class="text-emerald-400">$78.4 (+1.2%)</strong></span>
+            <span class="text-slate-300">USD/COP: <strong class="text-rose-400">$4,120 (-0.3%)</strong></span>
+            <span class="text-slate-300">S&P 500: <strong class="text-emerald-400">5,240 (+0.5%)</strong></span>
+            <span class="text-cyan-300">BanRep: <strong>9.25%</strong></span>
         </div>
 
         <!-- Barra de Navegación -->
@@ -73,13 +70,13 @@
                 <div class="text-4xl mb-3">⚡</div>
                 <h2 class="text-2xl font-bold text-emerald-400 mb-2">Desafío Táctico: ¿Comprar o Vender?</h2>
                 <p class="text-slate-300 text-sm mb-6 leading-relaxed">
-                    En este juego pondrás a prueba tu instinto financiero. En cada ronda <strong>te diremos en qué activo está invertido tu cofre</strong> de 1,000 monedas de oro. Analiza la noticia de última hora y decide al instante si debes <strong>COMPRAR</strong> (apostar al alza) o <strong>VENDER</strong> (proteger el capital). ¡Sabrás de inmediato si tu decisión fue la correcta!
+                    En este juego pondrás a prueba tu instinto financiero. En cada ronda <strong>te diremos en qué activo está invertido tu cofre</strong> de 1,000 monedas de oro. Analiza el gráfico técnico y la noticia de última hora para decidir si <strong>COMPRAR</strong> (apostar al alza) o <strong>VENDER</strong> (proteger capital).
                 </p>
                 
                 <div class="bg-slate-900 border border-slate-700 rounded-xl p-4 mb-6 text-left text-xs space-y-2">
-                    <div class="text-emerald-400 font-semibold">✓ Regla 1: Ya tienes tu dinero invertido en un activo específico.</div>
-                    <div class="text-cyan-400 font-semibold">✓ Regla 2: Lee el impacto económico de la noticia y oprime Comprar o Vender.</div>
-                    <div class="text-amber-400 font-semibold">✓ Regla 3: Recibirás retroalimentación didáctica al instante con tus ganancias o pérdidas.</div>
+                    <div class="text-emerald-400 font-semibold">✓ Regla 1: Dinero invertido en un activo base por ronda.</div>
+                    <div class="text-cyan-400 font-semibold">✓ Regla 2: Analiza las velas japonesas y el entorno macroeconómico.</div>
+                    <div class="text-amber-400 font-semibold">✓ Regla 3: Obtén retroalimentación didáctica inmediata.</div>
                 </div>
 
                 <div class="mb-4 text-left">
@@ -115,22 +112,35 @@
                     </div>
                 </div>
 
-                <!-- Tarjeta del Activo Asignado -->
-                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 mb-6 shadow-xl flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div>
+                <!-- Tarjeta del Activo Asignado y Gráfico de Velas -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 mb-6 shadow-xl grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                    <div class="lg:col-span-1">
                         <div class="flex items-center gap-2 mb-1">
-                            <span class="bg-slate-700 text-cyan-300 text-xs px-2.5 py-1 rounded font-mono font-bold">TU INVERSIÓN ACTUAL</span>
-                            <span id="activo-categoria" class="text-xs text-slate-400">Materias Primas / Refugio de Valor</span>
+                            <span class="bg-slate-700 text-cyan-300 text-xs px-2.5 py-1 rounded font-mono font-bold">ACTIVO ASIGNADO</span>
+                            <span id="activo-categoria" class="text-xs text-slate-400">Refugio</span>
                         </div>
                         <h2 id="activo-nombre" class="text-2xl font-extrabold text-white flex items-center gap-2">
                             <span>⛏️</span> Minera Dragón de Oro
                         </h2>
-                        <p id="activo-desc" class="text-xs text-slate-400 mt-1">Compañía minera extractora de lingotes de oro y metales preciosos.</p>
+                        <p id="activo-desc" class="text-xs text-slate-400 mt-1">Compañía minera extractora de lingotes de oro.</p>
+                        <div class="mt-4 bg-slate-900 border border-slate-700 rounded-xl p-3">
+                            <span class="text-xs text-slate-400 block uppercase font-bold">Capital Actual en Activo</span>
+                            <span id="activo-capital" class="text-lg font-mono font-bold text-emerald-400">1.000 Monedas</span>
+                        </div>
                     </div>
-                    <div class="bg-slate-900 border border-slate-700 rounded-xl p-4 text-right min-w-[200px]">
-                        <span class="text-xs text-slate-400 block uppercase font-bold">Tu Capital Asignado</span>
-                        <span id="activo-capital" class="text-xl font-mono font-bold text-emerald-400">1.000 Monedas</span>
-                        <span class="text-[10px] text-slate-500 block mt-0.5">Invertido al 100% en este activo</span>
+                    
+                    <!-- Gráfico de Velas Japonesas Técnico -->
+                    <div class="lg:col-span-2 bg-slate-900 border border-slate-700 rounded-xl p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-mono text-cyan-400 font-bold">📊 Gráfico Técnico (Velas Japonesas H4)</span>
+                            <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono">Tendencia del Activo</span>
+                        </div>
+                        <div id="contenedor-velas" class="flex justify-around items-end h-32 pt-4 px-2 border-b border-slate-800">
+                            <!-- Las velas se cargan dinámicamente -->
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                            <span>T-4</span><span>T-3</span><span>T-2</span><span>T-1</span><span class="text-cyan-400 font-bold">AHORA</span>
+                        </div>
                     </div>
                 </div>
 
@@ -144,7 +154,7 @@
                     <p id="noticia-cuerpo" class="text-slate-300 text-sm mb-4 leading-relaxed">La caída de dos grandes bancos multinacionales genera pánico en los mercados globales. Millones de ahorradores e inversionistas institucionales abandonan activos riesgosos para refugiarse en el oro físico.</p>
                     
                     <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-cyan-300 font-medium">
-                        💬 Pregunta para el equipo (<span id="txt-nombre-equipo" class="text-white font-bold">Nicolas</span>): De acuerdo con esta noticia, ¿qué acción debes tomar inmediatamente con tu inversión en <span id="txt-nombre-activo" class="text-amber-400 font-bold">Minera Dragón de Oro</span>?
+                        💬 Pregunta para el equipo (<span id="txt-nombre-equipo" class="text-white font-bold">Nicolas</span>): Con base en la noticia y el gráfico de velas, ¿qué acción tomas con <span id="txt-nombre-activo" class="text-amber-400 font-bold">Minera Dragón de Oro</span>?
                     </div>
                 </div>
 
@@ -250,7 +260,8 @@
                 correcta: "COMPRAR",
                 impactoPct: 35,
                 explicacion: "En momentos de incertidumbre geopolítica o crisis bancaria, el oro opera como el principal 'activo refugio', recibiendo capitales masivos que elevan rápidamente su precio.",
-                concepto: "Activo Refugio en Crisis"
+                concepto: "Activo Refugio en Crisis",
+                velas: ['verde', 'verde', 'rojo', 'verde', 'verde'] // Tendencia alcista
             },
             {
                 ronda: 2,
@@ -263,7 +274,8 @@
                 correcta: "VENDER",
                 impactoPct: 25,
                 explicacion: "Un aumento repentino en el costo de los insumos principales deteriora rápidamente las finanzas de las aerolíneas al no poder trasladar todo el costo inmediatamente a los boletos.",
-                concepto: "Estructura de Costos Operativos"
+                concepto: "Estructura de Costos Operativos",
+                velas: ['verde', 'rojo', 'rojo', 'rojo', 'rojo'] // Tendencia bajista
             },
             {
                 ronda: 3,
@@ -276,7 +288,8 @@
                 correcta: "COMPRAR",
                 impactoPct: 30,
                 explicacion: "Eliminar aranceles abarata el producto en destino, expande el mercado potencial y genera economías de escala que aumentan el beneficio neto de la empresa exportadora.",
-                concepto: "Apertura Comercial y Rentabilidad"
+                concepto: "Apertura Comercial y Rentabilidad",
+                velas: ['rojo', 'verde', 'verde', 'verde', 'verde'] // Tendencia alcista
             },
             {
                 ronda: 4,
@@ -289,7 +302,8 @@
                 correcta: "VENDER",
                 impactoPct: 40,
                 explicacion: "Las restricciones regulatorias severas cortan la liquidez del ecosistema, provocando salidas masivas de capital institucional y caídas drásticas de valor.",
-                concepto: "Riesgo Regulatorio y Liquidez"
+                concepto: "Riesgo Regulatorio y Liquidez",
+                velas: ['verde', 'verde', 'rojo', 'rojo', 'rojo'] // Tendencia bajista fuerte
             },
             {
                 ronda: 5,
@@ -302,7 +316,8 @@
                 correcta: "COMPRAR",
                 impactoPct: 35,
                 explicacion: "La aprobación regulatoria de un fármaco innovador genera flujos de caja seguros a largo plazo protegidos por patentes exclusivas.",
-                concepto: "Innovación y Patentes Exclusivas"
+                concepto: "Innovación y Patentes Exclusivas",
+                velas: ['rojo', 'verde', 'rojo', 'verde', 'verde'] // Tendencia alcista
             },
             {
                 ronda: 6,
@@ -315,7 +330,8 @@
                 correcta: "VENDER",
                 impactoPct: 30,
                 explicacion: "Los fallos tecnológicos críticos generan pasivos contingentes por demandas, daño reputacional severo y suspensión temporal de operaciones.",
-                concepto: "Gestión de Riesgo Tecnológico"
+                concepto: "Gestión de Riesgo Tecnológico",
+                velas: ['verde', 'rojo', 'verde', 'rojo', 'rojo'] // Tendencia bajista
             }
         ];
 
@@ -369,6 +385,9 @@
             document.getElementById('activo-capital').innerText = `${capital.toLocaleString('es-CO')} Monedas`;
             document.getElementById('txt-nombre-activo').innerText = retoActual.activo;
 
+            // Generar Gráfico de Velas Japonesas
+            renderizarVelas(retoActual.velas);
+
             // Noticia
             document.getElementById('evento-num').innerText = `Evento ${rondaActual} de 6`;
             document.getElementById('noticia-titulo').innerText = retoActual.titulo;
@@ -376,6 +395,30 @@
 
             document.getElementById('panel-botones').classList.remove('hidden');
             document.getElementById('panel-feedback').classList.add('hidden');
+        }
+
+        function renderizarVelas(patron) {
+            let contenedor = document.getElementById('contenedor-velas');
+            contenedor.innerHTML = '';
+            
+            patron.forEach((tipo, index) => {
+                let esVerde = (tipo === 'verde');
+                let colorClase = esVerde ? 'bg-emerald-500 border-emerald-400' : 'bg-rose-500 border-rose-400';
+                let mechaColor = esVerde ? 'bg-emerald-400' : 'bg-rose-400';
+                let alturaCuerpo = Math.floor(Math.random() * 30) + 35; // Altura variable simulada
+
+                let velaHTML = `
+                    <div class="flex flex-col items-center justify-center h-full w-10">
+                        <!-- Mecha superior -->
+                        <div class="w-0.5 h-6 ${mechaColor}"></div>
+                        <!-- Cuerpo de la vela -->
+                        <div class="w-6 rounded-sm border ${colorClase}" style="height: ${alturaCuerpo}px;"></div>
+                        <!-- Mecha inferior -->
+                        <div class="w-0.5 h-6 ${mechaColor}"></div>
+                    </div>
+                `;
+                contenedor.innerHTML += velaHTML;
+            });
         }
 
         function tomarDecision(decision) {
